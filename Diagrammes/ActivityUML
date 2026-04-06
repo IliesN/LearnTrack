@@ -1,0 +1,21 @@
+@startuml
+start
+:Utilisateur connecté;
+:Accède au tableau de bord;
+:Clique sur "Ajouter une ressource";
+:Remplit le formulaire\n(titre, URL, type, catégorie);
+
+if (Données valides ?) then (oui)
+  :Ressource enregistrée\nstatut = "À faire";
+  :Affichage dans le tableau de bord;
+  :Utilisateur change statut\n→ "En cours";
+  :Utilisateur travaille\nsur la ressource;
+  :Utilisateur change statut\n→ "Terminé";
+  :Progression mise à jour;
+else (non)
+  :Affichage des erreurs;
+  :Retour au formulaire;
+endif
+
+stop
+@enduml
