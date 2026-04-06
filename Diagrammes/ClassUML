@@ -1,0 +1,52 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Utilisateur {
+  +id : int
+  +nom : string
+  +email : string
+  +mot_de_passe : string <<hashé bcrypt>>
+  +date_inscription : date
+  +role : enum {visiteur, utilisateur, admin}
+  --
+  +creerCompte()
+  +seConnecter()
+  +modifierProfil()
+  +supprimerCompte()
+}
+
+class Ressource {
+  +id : int
+  +titre : string
+  +url : string
+  +type : enum {article, vidéo, cours, livre}
+  +categorie : string
+  +statut : enum {à_faire, en_cours, terminé}
+  +date_ajout : date
+  +date_modification : date
+  +notes : string <<255 car. max>>
+  +user_id : int <<FK>>
+  --
+  +ajouter()
+  +modifierStatut()
+  +supprimer()
+}
+
+class Tag {
+  +id : int
+  +libelle : string
+  --
+  +creer()
+  +supprimer()
+}
+
+class RessourceTag {
+  +ressource_id : int <<FK>>
+  +tag_id : int <<FK>>
+}
+
+Utilisateur "1" --> "0..*" Ressource : possède
+Ressource "0..*" --> "0..*" Tag : est taguée
+Ressource "1" -- "0..*" RessourceTag
+Tag "1" -- "0..*" RessourceTag
+@enduml
