@@ -1,0 +1,31 @@
+@startuml
+actor Utilisateur
+participant "Tableau de bord" as UI
+participant "Flask Route\n/ressources" as Route
+participant "Modèle\nRessource" as Model
+database "SQLite" as DB
+
+Utilisateur -> UI : Clique "Ajouter une ressource"
+UI -> Utilisateur : Affiche formulaire\n(titre, URL, type, catégorie)
+Utilisateur -> UI : Soumet le formulaire
+UI -> Route : POST /ressources\n{titre, url, type, categorie}
+Route -> Route : Valide URL + titre non vides
+alt Données invalides
+  Route -> UI : Erreur de validation
+  UI -> Utilisateur : Affiche les erreurs
+else Données valides
+  Route -> Model : Crée Ressource\nstatut="à_faire" par défaut
+  Model -> DB : INSERT INTO ressources
+  DB --> Model : OK
+  Model --> Route : Ressource créée
+  Route -> UI : Redirect /dashboard
+  UI -> Utilisateur : Liste mise à jour\navec la nouvelle ressource
+end
+
+Utilisateur -> UI : Change statut → "En cours"
+UI -> Route : PATCH /ressources/{id}\n{statut: "en_cours"}
+Route -> DB : UPDATE ressources SET statut
+DB --> Route : OK
+Route -> UI : Confirmation
+UI -> Utilisateur : Tableau de bord mis à jour
+@enduml
