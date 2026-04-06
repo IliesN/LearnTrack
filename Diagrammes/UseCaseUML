@@ -1,0 +1,41 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Visiteur" as V
+actor "Utilisateur" as U
+actor "Administrateur" as A
+
+U --|> V
+A --|> U
+
+rectangle "LearnTrack" {
+  usecase "Consulter pages publiques" as UC1
+  usecase "Créer un compte" as UC2
+  usecase "Se connecter" as UC3
+  usecase "Modifier son profil" as UC4
+  usecase "Supprimer son compte" as UC5
+  usecase "Consulter ses ressources" as UC6
+  usecase "Ajouter une ressource" as UC7
+  usecase "Modifier une ressource" as UC8
+  usecase "Supprimer une ressource" as UC9
+  usecase "Modifier le statut d'une ressource" as UC10
+  usecase "Gérer les utilisateurs" as UC11
+  usecase "Voir le tableau de bord" as UC12
+}
+
+V --> UC1
+V --> UC2
+V --> UC3
+
+U --> UC4
+U --> UC5
+U --> UC6
+U --> UC7
+U --> UC8
+U --> UC9
+U --> UC10
+U --> UC12
+
+A --> UC11
+@enduml
