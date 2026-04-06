@@ -1,0 +1,24 @@
+@startuml
+actor Visiteur
+participant "Page Inscription" as UI
+participant "Flask Route\n/register" as Route
+participant "Modèle\nUtilisateur" as Model
+database "SQLite" as DB
+
+Visiteur -> UI : Clique sur "S'inscrire"
+UI -> Visiteur : Affiche formulaire\n(nom, email, mot de passe)
+Visiteur -> UI : Soumet le formulaire
+UI -> Route : POST /register\n{nom, email, password}
+Route -> Route : Vérifie unicité de l'email
+alt Email déjà utilisé
+  Route -> UI : Erreur "Email déjà pris"
+  UI -> Visiteur : Affiche message d'erreur
+else Email disponible
+  Route -> Model : hash_password(bcrypt)
+  Model -> DB : INSERT INTO utilisateurs
+  DB --> Model : OK
+  Model --> Route : Utilisateur créé
+  Route -> UI : Redirect /dashboard
+  UI -> Visiteur : Tableau de bord vide
+end
+@enduml
