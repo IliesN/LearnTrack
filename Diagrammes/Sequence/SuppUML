@@ -1,0 +1,26 @@
+@startuml
+actor Administrateur
+participant "Panel Admin" as UI
+participant "Flask Route\n/admin/users" as Route
+participant "Modèle\nUtilisateur" as Model
+database "SQLite" as DB
+
+Administrateur -> UI : Accède au panel admin
+UI -> Route : GET /admin/users
+Route -> DB : SELECT * FROM utilisateurs
+DB --> Route : Liste des utilisateurs
+Route -> UI : Affiche la liste
+
+Administrateur -> UI : Clique "Supprimer" sur un compte
+UI -> Administrateur : Demande confirmation
+Administrateur -> UI : Confirme la suppression
+UI -> Route : DELETE /admin/users/{id}
+Route -> Model : supprimerUtilisateur(id)
+Model -> DB : DELETE FROM ressources WHERE user_id={id}
+DB --> Model : OK (suppression cascade)
+Model -> DB : DELETE FROM utilisateurs WHERE id={id}
+DB --> Model : OK
+Model --> Route : Succès
+Route -> UI : Redirect /admin/users
+UI -> Administrateur : Message "Utilisateur supprimé"
+@enduml
