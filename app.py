@@ -17,6 +17,13 @@ def load_logged_in_user():
         # Récupération stricte des champs nécessaires (Green IT)
         g.user = db.execute('SELECT id, nom, email, role FROM user WHERE id = ?', (user_id,)).fetchone()
 
+@app.after_request
+def add_header(response):
+    # Force le navigateur à toujours interroger le serveur (corrige le bug du "Not Found" fantôme)
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    return response
+
 @app.route('/')
 def index():
     return render_template('index.html')
