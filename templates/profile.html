@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Mon Profil - LearnTrack{% endblock %}
+{% block content %}
+<h2>Mon Profil</h2>
+
+<form action="{{ url_for('profile') }}" method="post" style="margin-bottom: 2rem;">
+    <label for="nom">Modifier mon nom</label>
+    <input type="text" id="nom" name="nom" value="{{ g.user['nom'] }}" required>
+    
+    <p style="font-size: 0.9rem; color: gray;">Email : {{ g.user['email'] }} (Non modifiable)</p>
+    
+    <button type="submit">Enregistrer les modifications</button>
+</form>
+
+<section style="border-top: 1px solid var(--error); padding-top: 1rem;">
+    <h3 style="color: var(--error);">Zone de danger</h3>
+    <form action="{{ url_for('delete_profile') }}" method="post" onsubmit="return confirm('Attention ! Cette action est irréversible et supprimera toutes vos ressources. Continuer ?');">
+        <button type="submit" style="background-color: var(--error);">Supprimer mon compte</button>
+    </form>
+</section>
+{% endblock %}

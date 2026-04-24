@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Ajouter une ressource - LearnTrack{% endblock %}
+{% block content %}
+<h2>Nouvelle Ressource</h2>
+<form action="{{ url_for('add_resource') }}" method="post">
+    <label for="titre">Titre</label>
+    <input type="text" id="titre" name="titre" required maxlength="255">
+
+    <label for="url">URL</label>
+    <input type="url" id="url" name="url" required>
+    
+    <label for="type">Type de ressource</label>
+    <select id="type" name="type" required>
+        <option value="Article">Article</option>
+        <option value="Vidéo">Vidéo</option>
+        <option value="Cours">Cours en ligne</option>
+        <option value="Livre">Livre</option>
+    </select>
+
+    <label for="categorie">Catégorie (optionnel)</label>
+    <input type="text" id="categorie" name="categorie" maxlength="100">
+    
+    <button type="submit">Ajouter à mes ressources</button>
+    <a href="{{ url_for('dashboard') }}" style="text-align: center; display: block; margin-top: 1rem;">Annuler</a>
+</form>
+{% endblock %}

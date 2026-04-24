@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Accueil - LearnTrack{% endblock %}
+{% block content %}
+<div style="text-align: center; margin-bottom: 2rem;">
+    <h1>Bienvenue sur LearnTrack</h1>
+    <p>Centralisez et suivez vos ressources d'apprentissage en toute simplicité.</p>
+    {% if not g.user %}
+        <div style="margin-top: 1rem;">
+            <a href="{{ url_for('register') }}" style="padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; display: inline-block; margin-right: 0.5rem;">Créer un compte</a>
+            <a href="{{ url_for('login') }}" style="padding: 0.5rem 1rem; border: 1px solid var(--primary); color: var(--primary); border-radius: 4px; display: inline-block;">Se connecter</a>
+        </div>
+    {% else %}
+        <a href="{{ url_for('dashboard') }}" style="padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; display: inline-block; margin-top: 1rem;">Aller au Tableau de Bord</a>
+    {% endif %}
+</div>
+
+<section style="border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem;">
+    <h2>Nos Engagements Éco-responsables 🌿</h2>
+    <ul>
+        <li><strong>Légèreté & Performance :</strong> Poids de la page inférieur à 50 Ko pour un chargement instantané même en 3G.</li>
+        <li><strong>Zéro dépendance :</strong> Interface en HTML/CSS natif. Aucun JavaScript lourd, aucune police externe.</li>
+        <li><strong>Protection des données :</strong> Zéro traceur, zéro cookie publicitaire, minimisation des données collectées.</li>
+    </ul>
+</section>
+{% endblock %}

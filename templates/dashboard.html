@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Mon Tableau de Bord - LearnTrack{% endblock %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h2 style="margin: 0;">Mes ressources</h2>
+    <a href="{{ url_for('add_resource') }}" style="padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px;">+ Nouvelle</a>
+</div>
+
+<!-- Filtrage (US4 / B4) -->
+<div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-size: 0.95rem;">
+    <strong>Filtrer :</strong>
+    <a href="{{ url_for('dashboard', statut='tout') }}" style="margin: 0 0.5rem; {% if current_filter == 'tout' %}text-decoration: underline; font-weight: bold;{% endif %}">Tout</a>
+    <a href="{{ url_for('dashboard', statut='à_faire') }}" style="margin: 0 0.5rem; {% if current_filter == 'à_faire' %}text-decoration: underline; font-weight: bold;{% endif %}">À faire</a>
+    <a href="{{ url_for('dashboard', statut='en_cours') }}" style="margin: 0 0.5rem; {% if current_filter == 'en_cours' %}text-decoration: underline; font-weight: bold;{% endif %}">En cours</a>
+    <a href="{{ url_for('dashboard', statut='terminé') }}" style="margin: 0 0.5rem; {% if current_filter == 'terminé' %}text-decoration: underline; font-weight: bold;{% endif %}">Terminé</a>
+</div>
+
+{% if ressources %}
+    <ul style="list-style: none; padding: 0;">
+        {% for r in ressources %}
+            <li style="margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--border); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <strong style="font-size: 1.1rem;"><a href="{{ r['url'] }}" target="_blank" rel="noopener">{{ r['titre'] }}</a></strong> 
+                        <br>
+                        <small>Type: {{ r['type'] }} | Catégorie: {{ r['categorie'] or 'Aucune' }}</small>
+                    </div>
+                    
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <!-- Modification rapide du statut -->
+                        <form action="{{ url_for('update_status', id=r['id']) }}" method="post" style="display:inline; margin:0; flex-direction:row;">
+                            <select name="statut" onchange="this.form.submit()" style="padding: 0.2rem; font-size: 0.9rem;">
+                                <option value="à_faire" {% if r['statut'] == 'à_faire' %}selected{% endif %}>À faire</option>
+                                <option value="en_cours" {% if r['statut'] == 'en_cours' %}selected{% endif %}>En cours</option>
+                                <option value="terminé" {% if r['statut'] == 'terminé' %}selected{% endif %}>Terminé</option>
+                            </select>
+                        </form>
+                        
+                        <form action="{{ url_for('delete_resource', id=r['id']) }}" method="post" onsubmit="return confirm('Supprimer cette ressource ?');" style="display:inline; margin:0; flex-direction:row;">
+                            <button type="submit" style="background: var(--error); padding: 0.3rem 0.5rem; font-size: 0.9rem;">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <div style="margin-top: 1rem; text-align: center;">
+        {% if page > 1 %}<a href="{{ url_for('dashboard', page=page-1, statut=current_filter) }}">← Précédent</a>{% endif %}
+        <span style="margin: 0 1rem;">Page {{ page }}</span>
+        <a href="{{ url_for('dashboard', page=page+1, statut=current_filter) }}">Suivant →</a>
+    </div>
+{% else %}
+    <p>Aucune ressource dans cette section. Commencez à structurer votre apprentissage !</p>
+{% endif %}
+{% endblock %}

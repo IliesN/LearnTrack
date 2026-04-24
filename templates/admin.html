@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Administration - LearnTrack{% endblock %}
+{% block content %}
+<h2>Gestion des utilisateurs (Admin)</h2>
+
+{% if utilisateurs %}
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--border); text-align: left;">
+                    <th style="padding: 0.5rem;">ID</th>
+                    <th style="padding: 0.5rem;">Nom</th>
+                    <th style="padding: 0.5rem;">Email</th>
+                    <th style="padding: 0.5rem;">Rôle</th>
+                    <th style="padding: 0.5rem;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in utilisateurs %}
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;">{{ u['id'] }}</td>
+                    <td style="padding: 0.5rem;">{{ u['nom'] }}</td>
+                    <td style="padding: 0.5rem;">{{ u['email'] }}</td>
+                    <td style="padding: 0.5rem;">{{ u['role'] }}</td>
+                    <td style="padding: 0.5rem;">
+                        {% if u['id'] != g.user['id'] %}
+                        <form action="{{ url_for('delete_user', id=u['id']) }}" method="post" onsubmit="return confirm('Supprimer cet utilisateur et toutes ses ressources en cascade ?');" style="display:inline; margin:0; flex-direction: row; max-width: none;">
+                            <button type="submit" style="background: var(--error); padding: 0.2rem 0.5rem; font-size: 0.8rem;">Supprimer</button>
+                        </form>
+                        {% else %}
+                        <span style="color: gray;">Vous-même</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="margin-top: 1rem; text-align: center;">
+        {% if page > 1 %}<a href="{{ url_for('admin', page=page-1) }}">← Précédent</a>{% endif %}
+        <span style="margin: 0 1rem;">Page {{ page }}</span>
+        <a href="{{ url_for('admin', page=page+1) }}">Suivant →</a>
+    </div>
+{% else %}
+    <p>Aucun utilisateur trouvé.</p>
+{% endif %}
+{% endblock %}

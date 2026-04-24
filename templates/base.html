@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LearnTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav style="display: flex; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; align-items: center;">
+            <a href="{{ url_for('index') }}" style="flex-grow: 1; font-size: 1.2rem;"><strong>LearnTrack</strong></a>
+            {% if g.user %}
+                <a href="{{ url_for('dashboard') }}">Tableau de bord</a>
+                <a href="{{ url_for('profile') }}">Mon Profil</a>
+                {% if g.user['role'] == 'Administrateur' %}
+                    <a href="{{ url_for('admin') }}" style="color: var(--error);">Admin</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Déconnexion ({{ g.user['nom'] }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Connexion</a>
+                <a href="{{ url_for('register') }}">Inscription</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer style="margin-top: 3rem; font-size: 0.9rem; text-align: center; border-top: 1px solid var(--border); padding-top: 1rem;">
+        <p>🌿 Projet Numérique Durable LearnTrack - Zéro traceur, conçu pour être sobre.</p>
+    </footer>
+</body>
+</html>
