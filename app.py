@@ -1,7 +1,7 @@
 import os
 import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
-from database import get_db
+from database_creation import get_db
 
 app = Flask(__name__)
 # Clé secrète (utiliser une variable d'environnement en production)
