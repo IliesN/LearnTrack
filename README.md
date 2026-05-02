@@ -3,6 +3,7 @@
 **LearnTrack** est un service web de gestion de ressources pédagogiques personnelles (articles, vidéos, cours, livres). Conçu pour les étudiants et les autodidactes, il permet d'ajouter, d'organiser et de suivre l'état de ses apprentissages de manière centralisée. Pensé selon les principes stricts du Green IT, l'outil se veut sobre, rapide, sans distraction, et respectueux des données (zéro cookie, zéro traceur).
 
 **URL du site déployé :** [https://learntrack-zw6c.onrender.com/](https://learntrack-zw6c.onrender.com/)
+**Lien du repository GitHub :** [https://github.com/IliesN/LearnTrack](https://github.com/IliesN/LearnTrack)
 
 ---
 
