@@ -37,7 +37,7 @@ Pour tester le projet sur votre machine, suivez ces étapes :
 
 **1. Cloner le dépôt :**
 ```bash
-git clone [https://github.com/votre-identifiant/LearnTrack.git](https://github.com/votre-identifiant/LearnTrack.git)
+git clone [https://github.com/IliesN/LearnTrack](https://github.com/IliesN/LearnTrack)
 cd LearnTrack
 ```
 
@@ -83,7 +83,7 @@ LearnTrack/
 ├── README.md                # Documentation principale
 ├── docs/
 │   ├── Rapport_LearnTrack.pdf # Rapport de projet final (Conception, Tests, Empreinte Carbone)
-│   └── diagrammes/          # Diagrammes UML et maquettes (Livrable 1)
+│   └── Diagrammes/          # Diagrammes UML et maquettes (Livrable 1)
 ├── static/
 │   └── css/
 │       └── style.css        # Feuille de style unique et minimaliste
@@ -104,3 +104,4 @@ LearnTrack/
 
 L'ensemble de la conception (UML, architecture), des choix techniques, ainsi que l'analyse des tests de performance (EcoIndex, Website Carbon) sont disponibles dans notre rapport final
 
+[Lien du rapport](https://github.com/IliesN/LearnTrack/blob/main/docs/Green_IT_Livrable_2.pdf)
